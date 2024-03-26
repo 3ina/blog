@@ -1,11 +1,13 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 const DBUSER = "root";
 const DBPASS= "Sin@2011";
 const DBNAME = "blog_php";
 const DBHOST = "localhost";
 
-function run_query(string $query,array $data=[])
+function run_query(string $query,array $data=[]): bool|array
 {
     $stringconnection = "mysql:hostname=localhost;dbname=".DBNAME;
     $con = new PDO($stringconnection, DBUSER, DBPASS);
@@ -19,6 +21,24 @@ function run_query(string $query,array $data=[])
     }
 
     return false;
+}
+
+#[NoReturn] function redirect($page): void
+{
+    header('Location',$page);
+    die;
+}
+
+function old_value(string $key) : string {
+    if(!empty($_POST[$key])){
+        return $_POST;
+    }
+    return "";
+}
+
+function authenticate($row): void
+{
+    $_SESSION["user"] = $row;
 }
 
 function create_tables(): void
