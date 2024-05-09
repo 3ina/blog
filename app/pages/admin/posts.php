@@ -76,18 +76,10 @@
     </div>
 
     <script src="<?=ROOT?>/assets/js/jquery.js"></script>
-    <script src="<?=ROOT?>/assets/summernote/summernote-lite.min.js"></script>
-    <script>
-        $('#summernote').summernote({
-            placeholder: 'Post content',
-            tabsize: 2,
-            height: 400
-        });
-    </script>
+
 
 <?php elseif($action == 'edit'):?>
 
-    <link rel="stylesheet" type="text/css" href="<?=ROOT?>/assets/summernote/summernote-lite.min.css">
 
     <div class="col-md-12 mx-auto">
         <form method="post" enctype="multipart/form-data">
@@ -127,7 +119,7 @@
                 <?php endif;?>
 
                 <div class="">
-                    <textarea id="summernote" rows="8" name="content" id="floatingInput" placeholder="Post content" type="content" class="form-control"><?=old_value('content',add_root_to_images($row['content']))?></textarea>
+                    <textarea id="summernote" rows="8" name="content" id="floatingInput" placeholder="Post content" type="content" class="form-control"><?=old_value('content',$row['content'])?></textarea>
                 </div>
                 <?php if(!empty($errors['content'])):?>
                     <div class="text-danger"><?=$errors['content']?></div>
@@ -168,14 +160,7 @@
     </div>
 
     <script src="<?=ROOT?>/assets/js/jquery.js"></script>
-    <script src="<?=ROOT?>/assets/summernote/summernote-lite.min.js"></script>
-    <script>
-        $('#summernote').summernote({
-            placeholder: 'Post content',
-            tabsize: 2,
-            height: 400
-        });
-    </script>
+
 
 <?php elseif($action == 'delete'):?>
 
