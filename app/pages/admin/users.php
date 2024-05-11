@@ -216,7 +216,6 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Image</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
@@ -235,9 +234,7 @@
                         <td><?=esc($row['username'])?></td>
                         <td><?=$row['email']?></td>
                         <td><?=$row['role']?></td>
-                        <td>
-                            <img src="<?=get_image($row['image'])?>" style="width: 100px;height: 100px;object-fit: cover;">
-                        </td>
+
                         <td><?=date("jS M, Y",strtotime($row['date']))?></td>
                         <td>
                             <a href="<?=ROOT?>/admin/users/edit/<?=$row['id']?>">
