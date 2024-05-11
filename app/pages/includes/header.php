@@ -136,8 +136,12 @@
                 </li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+            <form action="<?=ROOT?>/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <div class="input-group">
+                    <input   value="<?=$_GET['find'] ?? ''?>" name="find" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                    <button class="btn btn-light">Find</button>
+                </div>
+
             </form>
 
             <!--                <div class="text-end">-->

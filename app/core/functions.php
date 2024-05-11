@@ -155,7 +155,7 @@ function create_tables(): void
         id INT primary key auto_increment,
         username VARCHAR(50) not null,
         email VARCHAR(100) not null,
-        image VARCHAR(1024),
+        password VARCHAR(1024) not null,
         date DATETIME default current_timestamp,
         role VARCHAR(10) not null,
         
@@ -190,12 +190,9 @@ function create_tables(): void
 		image varchar(1024) null,
 		date datetime default current_timestamp,
 		slug varchar(100) not null,
-
-		key user_id (user_id),
-		key category_id (category_id),
-		key title (title),
-		key slug (slug),
-		key date (date)
+         FOREIGN KEY (category_id) REFERENCES categories (id),
+         FOREIGN KEY (user_id) REFERENCES users (id)
+		
 
 )";
     $stm = $con->prepare($query);
@@ -220,14 +217,14 @@ function str_to_url($url): array|string|null
 function user($key = '')
 {
     if(empty($key))
-        return $_SESSION['USER'];
+        return $_SESSION['user'];
 
-    if(!empty($_SESSION['USER'][$key]))
-        return $_SESSION['USER'][$key];
+    if(!empty($_SESSION['user'][$key]))
+        return $_SESSION['user'][$key];
 
     return '';
 }
 
 
 
-//create_tables();
+create_tables();

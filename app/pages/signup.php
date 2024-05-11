@@ -2,47 +2,51 @@
 
 if (!empty($_POST)){
     $errors = [];
-    if (empty($errors)){
-        $data = [];
-        if(empty($_POST["username"])){
-            $errors['username'] = "A username is required";
-        }else if(!preg_match("/^[a-zA-Z]$/",$_POST['username'])){
-            $errors['username'] = "username can only have letters and no space";
-        }
+    $data = [];
 
-            $query = "select id from users where email = :email limit 1";
-            $email = run_query($query,['email'=> $_POST["email"]]);
-
-
-        if(empty($_POST["email"])) {
-            $errors['email'] = "A email is required";
-        }else if($email){
-            $errors['email'] = "email already exists";
-        }else if(!filter_var($_POST["email"],FILTER_VALIDATE_FLOAT)){
-            $errors['email'] = "email not valid";
-        }
-
-
-        if(empty($_POST["password"])) {
-            $errors['password'] = "A password is required";
-        }else if(strlen($_POST['password']) < 8){
-            $errors['password'] = "password must be 8 character or more";
-        }else if($_POST['password'] !== $_POST["confirm_password"]){
-            $errors['password'] = "password dont match";
-        }
-
-
+    if(empty($_POST["username"])){
+        $errors['username'] = "A username is required";
+    }else if(!preg_match("/^[a-zA-Z]+$/",$_POST['username'])){
+        $errors['username'] = "username can only have letters and no space";
     }
 
-    $data["username"] = $_POST["username"];
-    $data["email"] = $_POST["email"];
-    $data["role"] = "user";
-    $data["password"] = password_hash($_POST["password"],PASSWORD_DEFAULT) ;
+    $query = "select id from users where email = :email limit 1";
+    $email = run_query($query,['email'=> $_POST["email"]]);
 
 
-    $query = "insert into users (username,email,password,role) values (:username,:email,:password,:role)";
-    run_query($query,$data);
-    redirect('login');
+    if(empty($_POST["email"])) {
+        $errors['email'] = "A email is required";
+    }else if($email){
+        $errors['email'] = "email already exists";
+    }else if(!filter_var($_POST["email"],FILTER_VALIDATE_EMAIL)){
+        $errors['email'] = "email not valid";
+    }
+
+
+    if(empty($_POST["password"])) {
+        $errors['password'] = "A password is required";
+    }else if(strlen($_POST['password']) < 8){
+        $errors['password'] = "password must be 8 character or more";
+    }else if($_POST['password'] !== $_POST["confirm_password"]){
+        $errors['password'] = "password dont match";
+    }
+
+
+
+
+    if (empty($errors)){
+        $data["username"] = $_POST["username"];
+        $data["email"] = $_POST["email"];
+        $data["role"] = "user";
+        $data["password"] = password_hash($_POST["password"],PASSWORD_DEFAULT) ;
+
+
+        $query = "insert into users (username,email,password,role) values (:username,:email,:password,:role)";
+        run_query($query,$data);
+        redirect('login');
+    }
+
+
 }
 
 
@@ -140,7 +144,7 @@ if (!empty($_POST)){
             <label for="floatingInput">User name</label>
         </div>
         <div>
-            <?php if (!empty($errors)):?>
+            <?php if (!empty($errors['username'])):?>
             <div class="text-danger"><?=$errors['username'] ?>  </div>
             <?php endif;?>
         </div>
@@ -151,7 +155,7 @@ if (!empty($_POST)){
         </div>
 
         <div>
-            <?php if (!empty($errors)):?>
+            <?php if (!empty($errors['email'])):?>
                 <div class="text-danger"><?=$errors['email'] ?>  </div>
             <?php endif;?>
         </div>
@@ -162,7 +166,7 @@ if (!empty($_POST)){
         </div>
 
         <div>
-            <?php if (!empty($errors)):?>
+            <?php if (!empty($errors['password'])):?>
                 <div class="text-danger"><?=$errors['password'] ?>  </div>
             <?php endif;?>
         </div>
