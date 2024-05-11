@@ -3,7 +3,7 @@
 use JetBrains\PhpStorm\NoReturn;
 
 const DBUSER = "root";
-const DBPASS= "Sin@2011";
+const DBPASS= "";
 const DBNAME = "blog_php";
 const DBHOST = "localhost";
 
